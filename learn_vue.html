@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Learn Vue.js</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style type="text/css">
+    .cursor {cursor: pointer; user-select: none;}
+    .container:nth-child(3) {border-top: 1px solid #333;}
+  </style>
+</head>
+<body>
+  <div id="counter1" class="container my-5 text-center">
+    <p class="display-4 col-12">{{ value }}</p>
+      <div @click="count_up" class="btn btn-dark col-1 cursor">+</div>
+      <div @click="count_down" class="btn btn-dark col-1 cursor">-</div>
+  </div>
+  <div id="counter2" class="container my-5 text-center">
+    <counter2></counter2>
+  </div>
+  <div id="fortune" class="container my-5 text-center">
+    <fortune></fortune>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+
+  new Vue({
+    el: '#counter1',
+    data: {
+      value: 0,
+    },
+    methods: {
+      count_up(){
+        this.value++
+      },
+      count_down(){
+        if(this.value !== 0){ this.value-- }
+      }
+    }
+  })
+
+  Vue.component('counter2', {
+    data: function(){
+      return {
+        value: 0
+      }
+    },
+    template: `<div>
+                  <p class="display-4 col-12">{{ value }}</p>
+                  <div @click="value++" class="btn btn-dark col-1 cursor">+</div>
+                  <div @click="value>0?value--:0" class="btn btn-dark col-1 cursor">-</div>
+              </div>`
+  })
+
+  new Vue({
+    el: '#counter2'
+  })
+  
+  Vue.component('fortune',{
+    data: function(){
+      return {
+        value: '?',
+        fortuneArrays: ['大吉','中吉','小吉','吉','末吉','凶','大凶']
+      }
+    },
+    template: `<div>
+                  <div class="display-4 my-5 mx-auto py-3 col-5 col-lg-2 bg-light rounded border">{{ value }}</div>
+                  <div @click="value=fortuneArrays[Math.floor(Math.random()*fortuneArrays.length)]" class="btn btn-secondary cursor">click!</div>
+                  <div @click="value='?'" class="btn btn-outline-secondary cursor">reset</div>
+               </div>`
+  })
+
+  new Vue({
+    el: '#fortune'
+  })
+
+</script>
+</body>
+</html>
